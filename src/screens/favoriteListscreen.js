@@ -13,15 +13,24 @@ const FavoriteListScreen = ({ navigation }) => {
     return (
         <ScrollView style={styles.container}>
             <HeaderComponent title={'MY FAVORITE'} />
-            <View style={styles.wrapper}>
-                {filterdMovies &&
+            {filterdMovies.length > 0 ? (
+                <View style={styles.wrapper}>
+                    {
+                        filterdMovies.map((movie, index) => (
+                            <CardComponent data={movie} key={index} />
+                        ))
+                    }
 
-                    filterdMovies.map((movie, index) => (
-                        <CardComponent data={movie} key={index} />
-                    ))
-
-                }
-            </View>
+                </View>
+            ) : (
+                <View style={{ marginTop: '40%', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20 }}>No data present!!</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}
+                        style={{ backgroundColor: 'white', padding: 10, borderRadius: 10, elevation: 10, marginTop: 10 }}>
+                        <Text style={{ color: text_Color }}>Go to Home Screen</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </ScrollView>
     )
 }
@@ -40,7 +49,8 @@ const styles = StyleSheet.create({
         padding: 10,
         gap: 10,
         width: '100%',
-        flexWrap: 'wrap', marginTop: 20
+        flexWrap: 'wrap',
+        marginTop: 20
     }
 
 });
